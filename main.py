@@ -16,7 +16,7 @@ with open(os.path.join('.', 'config', 'object_config.json')) as fp:
     object_config = json.load(fp)
 with open(os.path.join('.', 'config', 'topic_routes.json')) as fp:
     topic_routes = json.load(fp)
-with open(os.path.join('.', 'config', 'topic_routes.json')) as fp:
+with open(os.path.join('.', 'config', 'targets.json')) as fp:
     targets = json.load(fp)
 
 # Global Object Factory
