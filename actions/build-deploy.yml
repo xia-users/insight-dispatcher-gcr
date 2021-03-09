@@ -49,6 +49,10 @@ jobs:
         --member=serviceAccount:${{xia.sa-name}}@${PROJECT_ID}.iam.gserviceaccount.com \
         --role=roles/${{xia.pub-role-3}}
 
+    - name: Download Route Table
+      run: |
+        curl "{{ secrets.XIA_ROUTE_TABLE_URL }}" --output routes.zip
+
     - name: Deploy
       run: |
         PROJECT_ID=$(gcloud config list --format 'value(core.account)' | sed 's/.*@\(.*\)\.iam\.gserviceaccount.*/\1/')

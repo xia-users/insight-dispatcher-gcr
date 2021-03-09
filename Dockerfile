@@ -6,6 +6,7 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY LICENSE LICENSE
 COPY config config
+COPY routes.zip config/routes.zip
 COPY static static
 COPY templates templates
 COPY requirements.txt requirements.txt
