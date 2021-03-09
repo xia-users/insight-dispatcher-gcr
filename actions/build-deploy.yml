@@ -31,7 +31,7 @@ jobs:
         PROJECT_ID=$(gcloud config list --format 'value(core.account)' | sed 's/.*@\(.*\)\.iam\.gserviceaccount.*/\1/')
         gcloud iam service-accounts create ${{xia.sa-name}} \
         --project ${PROJECT_ID} \
-        --display-name "Cloud Run Pusher Agent"
+        --display-name "Cloud Run Dispatcher Agent"
 
     - name: Role Assign
       run: |
@@ -41,13 +41,13 @@ jobs:
         --role=roles/logging.logWriter
         gcloud projects add-iam-policy-binding ${PROJECT_ID} \
         --member=serviceAccount:${{xia.sa-name}}@${PROJECT_ID}.iam.gserviceaccount.com \
-        --role=roles/${{xia.pub-role}}
+        --role=roles/${{xia.pub-role-1}}
         gcloud projects add-iam-policy-binding ${PROJECT_ID} \
         --member=serviceAccount:${{xia.sa-name}}@${PROJECT_ID}.iam.gserviceaccount.com \
-        --role=roles/${{xia.db-role}}
+        --role=roles/${{xia.pub-role-2}}
         gcloud projects add-iam-policy-binding ${PROJECT_ID} \
         --member=serviceAccount:${{xia.sa-name}}@${PROJECT_ID}.iam.gserviceaccount.com \
-        --role=roles/${{xia.fs-role}}
+        --role=roles/${{xia.pub-role-3}}
 
     - name: Deploy
       run: |

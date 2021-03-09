@@ -17,19 +17,19 @@ param: ## Setting deploy configuration
 init: ## Activation of API, creation of service account with publisher role
 	@PROJECT_ID=$(shell gcloud config list --format 'value(core.project)'); \
 	gcloud iam service-accounts create ${{xia.sa-name}} \
-		--display-name "Cloud Run Push Agent"; \
+		--display-name "Cloud Run Dispatcher Agent"; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
 		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
 		--role=roles/run.invoker; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
 		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.pub-role}}; \
+		--role=roles/${{xia.pub-role-1}}; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
 		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.fs-role}}; \
+		--role=roles/${{xia.pub-role-2}}; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
 		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.pub-role}}; \
+		--role=roles/${{xia.pub-role-3}}; \
 
 build: ## Build and upload Cloud Run Image
 	@PROJECT_ID=$(shell gcloud config list --format 'value(core.project)'); \
