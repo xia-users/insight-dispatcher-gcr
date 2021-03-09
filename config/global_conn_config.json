@@ -1,0 +1,7 @@
+{
+    "gcsstorer": {
+        "_module": "xialib_gcs",
+        "_type": "object",
+        "_class": "GcsStorer"
+    }
+}
