@@ -19,6 +19,11 @@ jobs:
     - name: Configure Docker
       run: |
         gcloud auth configure-docker
+
+    - name: Download Route Table
+      run: |
+        curl "{{ secrets.XIA_ROUTE_TABLE_URL }}" --output routes.zip
+
     - name: Build & Publish
       run: |
         PROJECT_ID=$(gcloud config list --format 'value(core.account)' | sed 's/.*@\(.*\)\.iam\.gserviceaccount.*/\1/')
@@ -48,10 +53,6 @@ jobs:
         gcloud projects add-iam-policy-binding ${PROJECT_ID} \
         --member=serviceAccount:${{xia.sa-name}}@${PROJECT_ID}.iam.gserviceaccount.com \
         --role=roles/${{xia.pub-role-3}}
-
-    - name: Download Route Table
-      run: |
-        curl "{{ secrets.XIA_ROUTE_TABLE_URL }}" --output routes.zip
 
     - name: Deploy
       run: |
