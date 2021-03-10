@@ -27,7 +27,7 @@ client = google.cloud.logging.Client()
 client.get_default_handler()
 client.setup_logging()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def main():
     dispatcher = service_factory(object_config, global_connectors)
     dispatcher.set_tar_config(targets)

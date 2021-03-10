@@ -1,15 +1,1 @@
-{
-    "_module": "pyagent",
-    "adaptor": {
-        "_type": "object",
-        "_class": "JsonAdaptor",
-        "location": "gs://x-i-a-test-test-002/testcase-01",
-        "_module": "xialib",
-        "fs": {
-            "_type": "global",
-            "_name": "gcsstorer"
-        }
-    },
-    "_class": "Pusher",
-    "_type": "object"
-}
+{}
