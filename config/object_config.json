@@ -1,1 +1,27 @@
-{}
+{
+    "publisher": {
+        "pubsub": {
+            "_type": "object",
+            "_class": "PubsubPublisher",
+            "pub": {
+                "_type": "global",
+                "_name": "pubsub"
+            },
+            "_module": "xialib_pubsub"
+        },
+        "pubgcr": {
+            "_type": "object",
+            "_class": "PubsubGcrPublisher",
+            "_module": "xialib_pubsub"
+        }
+    },
+    "_module": "pyinsight",
+    "storer": {
+        "_type": "object",
+        "_class": "BasicStorer",
+        "_module": "xialib"
+    },
+    "route_file": "config/routes.zip",
+    "_class": "Dispatcher",
+    "_type": "object"
+}

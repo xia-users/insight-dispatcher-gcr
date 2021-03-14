@@ -16,32 +16,32 @@ param: ## Setting deploy configuration
 
 init: ## Activation of API, creation of service account with publisher role
 	@PROJECT_ID=$(shell gcloud config list --format 'value(core.project)'); \
-	gcloud iam service-accounts create ${{xia.sa-name}} \
+	gcloud iam service-accounts create gcr-xia-dispatcher \
 		--display-name "Cloud Run Dispatcher Agent"; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
-		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
+		--member=serviceAccount:gcr-xia-dispatcher@$${PROJECT_ID}.iam.gserviceaccount.com \
 		--role=roles/run.invoker; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
-		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.pub-role-1}}; \
+		--member=serviceAccount:gcr-xia-dispatcher@$${PROJECT_ID}.iam.gserviceaccount.com \
+		--role=roles/pubsub.publisher; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
-		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.pub-role-2}}; \
+		--member=serviceAccount:gcr-xia-dispatcher@$${PROJECT_ID}.iam.gserviceaccount.com \
+		--role=roles/run.invoker; \
 	gcloud projects add-iam-policy-binding $${PROJECT_ID} \
-		--member=serviceAccount:${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
-		--role=roles/${{xia.pub-role-3}}; \
+		--member=serviceAccount:gcr-xia-dispatcher@$${PROJECT_ID}.iam.gserviceaccount.com \
+		--role=roles/run.invoker; \
 
 build: ## Build and upload Cloud Run Image
 	@PROJECT_ID=$(shell gcloud config list --format 'value(core.project)'); \
-	gcloud builds submit --tag gcr.io/$${PROJECT_ID}/${{xia.service-name}};
+	gcloud builds submit --tag gcr.io/$${PROJECT_ID}/xia-dispatcher;
 
 deploy: ## Deploy Cloud Run Image by using the last built image
 	@PROJECT_ID=$(shell gcloud config list --format 'value(core.project)'); \
 	CLOUD_RUN_REGION=$(shell gcloud config list --format 'value(run.region)'); \
 	CLOUD_RUN_PLATFORM=$(shell gcloud config list --format 'value(run.platform)'); \
-	gcloud run deploy ${{xia.service-name}} \
-		--image gcr.io/$${PROJECT_ID}/${{xia.service-name}} \
-		--service-account ${{xia.sa-name}}@$${PROJECT_ID}.iam.gserviceaccount.com \
+	gcloud run deploy xia-dispatcher \
+		--image gcr.io/$${PROJECT_ID}/xia-dispatcher \
+		--service-account gcr-xia-dispatcher@$${PROJECT_ID}.iam.gserviceaccount.com \
 		--region $${CLOUD_RUN_REGION} \
 		--platform managed \
 		--no-allow-unauthenticated;
